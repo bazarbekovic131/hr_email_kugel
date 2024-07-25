@@ -1,0 +1,13 @@
+[Unit]
+Description= Email Sender Application with a schedule
+
+[Service]
+ExecStart=/usr/bin/python /home/$user/hr_email_kugel/email.service.python
+WorkingDirectory=/home/$user/hr_email_kugel
+Restart=always
+User=$user
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
