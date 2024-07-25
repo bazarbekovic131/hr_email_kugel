@@ -18,6 +18,7 @@ EMAIL_HOST = ''
 EMAIL_PORT = 465
 EMAIL_USER = ''
 EMAIL_PASSWORD = ''
+EMAIL_TO = ''
 
 3) Установить модули:
 

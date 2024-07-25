@@ -155,13 +155,12 @@ def send_email(to_address, subject, body, attachment_path=None):
     except Exception as e:
         logging.info(f"Failed to send email: {e}")
 
-def mailmain(cols):
+def mailmain(cols, email):
     logging.info("Checking for incomplete surveys.")
     incomplete_surveys = database.get_incomplete_surveys()
     logging.info(f"Surveys: {incomplete_surveys}")
     if not incomplete_surveys.empty:
         subject = 'Новые резюме'
-        email = 'bazar.akhmet@gmail.com'
         attachment_paths = []
         survey_ids = []
 
@@ -186,11 +185,11 @@ def mailmain(cols):
 
 def job():
     cols = ['id', 'phone', 'vacancy']
-    mailmain(cols)
+    email = os.getenv('EMAIL_TO')
+    mailmain(cols, email)
 
-# Schedule the job
-schedule.every(3).days.at("09:15").do(job)  # Change to your preferred schedule
+schedule.every(3).days.at("09:15").do(job)
 
 while True:
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(10)
