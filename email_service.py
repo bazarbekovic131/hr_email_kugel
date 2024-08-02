@@ -19,6 +19,7 @@ load_dotenv()
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_USER = os.getenv("EMAIL_USER")
+CC_USER = os.getenv("CC_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 db_config = {
@@ -129,6 +130,7 @@ def send_email(to_address, subject, body, attachment_path=None):
         msg['From'] = EMAIL_USER
         msg['To'] = to_address
         msg['Subject'] = subject
+        msg['Cc'] = CC_USER
 
         # Add the email body
         msg.attach(MIMEText(body, 'html'))
