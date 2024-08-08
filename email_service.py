@@ -10,7 +10,6 @@ import time
 import zipfile
 from datetime import datetime
 import logging
-import schedule
 
 load_dotenv()
 
@@ -173,7 +172,7 @@ def mailmain(cols, email):
                 survey_ids.append(row['id'])
             else:
                 survey_ids.append(row['id'])
-            #database.update_sent_status(row['id'])
+            database.update_sent_status(row['id'])
 
         if survey_ids:
             incomplete_surveys = incomplete_surveys[cols].reset_index(drop = True)
@@ -190,8 +189,10 @@ def job():
     email = os.getenv('EMAIL_TO')
     mailmain(cols, email)
 
-schedule.every(3).days.at("09:15").do(job)
+job() 
+### in Ubuntu, create a CRON task that will run this script.
 
-while True:
-    schedule.run_pending()
-    time.sleep(10)
+# crontab -l for seeing all cron tasks
+
+# crontab -e for editing the cron tasks
+# 15 4 * * * /usr/bin/python3 /home/bazarbekovic/code/hr_email_kugel/email_service.py in my case.

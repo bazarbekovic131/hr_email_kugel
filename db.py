@@ -55,15 +55,13 @@ class WADatabase():
     # new ones. untested
     def get_incomplete_surveys(self):
         with self.conn.cursor() as cur:
-            query = 'SELECT * FROM surveys WHERE sent = FALSE;'
+            query = "SELECT * FROM surveys WHERE sent = FALSE AND vacancy != '';"
             cur.execute(query)
             df = cur.fetchall()
         self.conn.commit()
         return pd.DataFrame(df, columns=['id', 'phone', 'age','production_experience', 'completed_survey', 'name', 'vacancy', 'sent', 'resume'])
 
     def update_sent_status(self, survey_id):
-        query = """
-            UPDATE surveys SET sent = TRUE WHERE id = %s;
-        """
+        query = "UPDATE surveys SET sent = TRUE WHERE id = %s;"
         self.conn.cursor().execute(query, (survey_id,))
         self.conn.commit()
